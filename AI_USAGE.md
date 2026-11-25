@@ -1,17 +1,14 @@
-# AI usage
+# AI Usage
 
-<!-- Replace every comment below with your own words. Short is fine. Your Track Mentor reads it. -->
+## How I used AI assistance
 
-## Tools I used, and for what
+- Claude was used as a learning and guidance assistant. I asked it to explain the task requirements, clarify the related concepts, and help me understand the implementation approach step by step.
+- I used that guidance to understand the work and make the implementation decisions. Claude was not used to generate the project files or write the implementation code.
 
-<!-- e.g. "Claude for a first agent.py draft; Copilot autocomplete in tools.py" -->
+## MCP SDK version
 
-## Whether my assistant produced MCP v1 code, and how I noticed
+- I did not use the MCP v1 `FastMCP` API. I checked `hisn/server.py` and used `from mcp.server import MCPServer` with `@server.tool()`, as required by the task's MCP 2.2.0 SDK.
 
-<!-- `from mcp.server.fastmcp import FastMCP` is v1; it fails to import under mcp 2.2.0. Say
-     whether you saw this, and how you fixed it (MCPServer, @server.tool()). -->
+## One additional hostile model behavior
 
-## One hostile model move I thought of that the spec does not mention
-
-<!-- A scripted model behaviour you tried beyond the ones in the task statement, and what your
-     loop did with it. -->
+- The model may try to add an unexpected field to its final JSON response, such as `system_override`, to smuggle extra instructions into the triage note. The `TriageNote` schema forbids extra fields, so validation rejects that response. The loop asks the model to return valid JSON; after three invalid final responses, it stops and returns `needs_human` with reason `invalid_output`.
